@@ -44,14 +44,14 @@ set -o xtrace
 
 renice 10 $$ >&2
 
-DATAIN=./t2t_linelens/try.in.txt
+DATAIN=./t2t_data_linelens/try.in.txt
 
 echo "This was a good film" > $DATAIN
 echo "This was a bad film" >> $DATAIN
 
 source venv/bin/activate
 
-t2t-trainer \
+t2t-decoder \
   --generate_data \
   --data_dir=./t2t_data_linelens \
   --output_dir=./t2t_train/linelens \
