@@ -1,0 +1,63 @@
+#!/bin/bash
+#
+# SGE CONFIGURATION
+#
+# !!! Memory limit
+#$ -hard
+#$ -l mem_free=20g
+#$ -l act_mem_free=20g
+#$ -l h_data=20g
+#
+# Run in this directory
+#$ -cwd
+#
+# Use bash
+#$ -S /bin/bash
+#
+# Export environment variables
+#$ -V
+#
+# Logs
+#$ -o /home/rosa/logs
+#$ -e /home/rosa/logs
+# Do not merge stderr with stdout
+#$ -j n
+#
+# run in troja or ms (but not gpu)
+# -q '(troja*|ms*)'
+#$ -q 'gpu*'
+#
+# send mail: b started, e ended, a aborted or rescheduled, s suspended
+# -M rosa@ufal.mff.cuni.cz -m beas
+#
+# 24 threads
+# -pe smp 24
+#
+# gpu stuff
+#$ -l gpu=1
+#$ -l gpu_cc_min3.5=1
+#$ -l gpu_ram=2G
+
+
+# Print each command to STDERR before executing (expanded), prefixed by "+ "
+set -o xtrace
+
+renice 10 $$ >&2
+
+
+source venv/bin/activate
+
+USR_DIR=.
+PROBLEM=poetry_lines
+DATA_DIR=./t2t_data_poetry
+TMP_DIR=/tmp/t2t_datagen
+mkdir -p $DATA_DIR $TMP_DIR
+
+t2t-datagen \
+  --t2t_usr_dir=$USR_DIR \
+  --data_dir=$DATA_DIR \
+  --tmp_dir=$TMP_DIR \
+  --problem=$PROBLEM
+
+
+
