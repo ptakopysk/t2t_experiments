@@ -70,5 +70,5 @@ class LineLens(text_problems.Text2ClassProblem):
               l = 100
           yield {
               "inputs": line,
-              "targets": l,
+              "label": l,
           }
