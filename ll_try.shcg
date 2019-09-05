@@ -59,6 +59,7 @@ t2t-decoder \
   --t2t_usr_dir=. \
   --model=transformer_encoder \
   --hparams_set=transformer_tiny \
+  --decode_hparams="identity_output=False" \
   --decode_from_file=$DATAIN \
   --decode_to_file=./t2t_data_linelens/try.out.txt
 
